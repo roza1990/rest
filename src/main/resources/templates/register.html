@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+
+</head>
+<body>
+<div class="container">
+    <div class="card bg-light">
+        <article class="card-body mx-auto" style="max-width: 400px;">
+            <h4 class="card-title mt-3 text-center">Create Account</h4>
+            <span id="message"></span>
+            <form id="formId" method="post">
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                    </div>
+                    <input name="name" class="form-control" placeholder="Full name" type="text" id="name">
+                </div> <!-- form-group// -->
+
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                    </div>
+                    <input name="surname" class="form-control" placeholder="Surname" type="text" id="surname">
+                </div> <!-- form-group// -->
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                    </div>
+                    <input name="email" class="form-control" placeholder="Email address" type="email" id="email">
+                </div> <!-- form-group// -->
+
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-building"></i> </span>
+                    </div>
+                    <select class="form-control" name="userType" id="userType">
+                        <option selected=""> Select user type</option>
+                        <option value="USER">USER</option>
+                        <option value="ADMIN">ADMIN</option>
+
+                    </select>
+                </div> <!-- form-group end.// -->
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                    </div>
+                    <input class="form-control" placeholder="Create password" type="password" id="password" name="password">
+                </div> <!-- form-group// -->
+
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-block" onclick="saveUser()"> Create Account  </button>
+                </div> <!-- form-group// -->
+                <p class="text-center">Have an account? <a href="/login">Log In</a> </p>
+            </form>
+        </article>
+    </div> <!-- card.// -->
+
+</div>
+
+</body>
+</html>
+<script>
+    function saveUser() {
+        var name = $("#name").val();
+        var surname = $("#surname").val();
+        var email = $("#email").val();
+        var password = $("#password").val();
+        var userType = $("#userType").val();
+
+        if(name=='' || surname=='' || email=='' || password=='' || userType==''){
+            $("#message").text("Please fill all the fields! ");
+            $("#message").css("color", "red");
+        }
+
+        var data = {
+            "name": name,
+            "surname": surname,
+            "email": email,
+            "password": password,
+            "userType":userType
+        };
+        //var form = $("#formId").serialize();
+        $.ajax({
+            url:"/api/token/signUp",
+            method: "post",
+            contentType: "application/json",
+            dataType: 'json',
+            data: JSON.stringify(data)
+        }).done(function (data) {
+            console.log(data)
+            $("#message").text("User was successfully added");
+            $("#message").css("color", "green");
+            $("#name").val("");
+            $("#surname").val("");
+            $("#email").val("");
+            $("#password").val("");
+            $("#userType").val("");
+        }).fail(function (error) {
+            if (error.status == 409) {
+                $("#message").text("User with this email already exist! ");
+                $("#message").css("color", "red");
+            }
+        })
+
+    }
+</script>
+
