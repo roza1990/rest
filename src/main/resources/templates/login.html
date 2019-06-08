@@ -46,6 +46,8 @@
 </html>
 
 <script>
+
+
     function login() {
         var email = $('#email').val();
         var password = $('#password').val();
@@ -69,7 +71,7 @@
 
         }).done(function (data) {
             console.log(data)
-            location.href='localhost:8080/index.html'
+            $(location).attr('href', '/');
 
         }).fail(function (error) {
             console.log("iyaa")

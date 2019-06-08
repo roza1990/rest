@@ -70,21 +70,6 @@ public class UserEndpoint {
   }
 
 
-  @PutMapping("/user/update")
-  public ResponseEntity update(@RequestBody User user) {
-    if (userRepository.findById(user.getId()).isPresent()) {
-      userRepository.save(user);
-      return ResponseEntity
-        .ok(user);
-    }
-    return ResponseEntity.notFound().build();
-  }
-
-  @GetMapping("/getAll")
-  public ResponseEntity getAll() {
-    return ResponseEntity.ok(userRepository.findAll());
-  }
-
   @GetMapping("/getUserDetails/{id}")
   public ResponseEntity getById(@PathVariable("id") int id) {
     Optional<User> byId = userRepository.findById(id);
@@ -94,16 +79,31 @@ public class UserEndpoint {
     return ResponseEntity.notFound().build();
   }
 
-  @DeleteMapping("/user/{id}")
-  public ResponseEntity deleteById(@PathVariable("id") int id, @AuthenticationPrincipal CurrentUser currentUser) {
-    Optional<User> byId = userRepository.findById(id);
-    if (byId.isPresent()) {
-      userRepository.deleteById(id);
+  @PutMapping("/user/update")
+  public ResponseEntity update(@RequestBody User user) {
+    if (userRepository.findById(user.getId()).isPresent()) {
+      userRepository.save(user);
       return ResponseEntity
-        .ok()
-        .build();
+              .ok(user);
     }
     return ResponseEntity.notFound().build();
   }
+
+//  @GetMapping("/getAll")
+//  public ResponseEntity getAll() {
+//    return ResponseEntity.ok(userRepository.findAll());
+//  }
+
+//  @DeleteMapping("/user/{id}")
+//  public ResponseEntity deleteById(@PathVariable("id") int id, @AuthenticationPrincipal CurrentUser currentUser) {
+//    Optional<User> byId = userRepository.findById(id);
+//    if (byId.isPresent()) {
+//      userRepository.deleteById(id);
+//      return ResponseEntity
+//        .ok()
+//        .build();
+//    }
+//    return ResponseEntity.notFound().build();
+//  }
 
 }

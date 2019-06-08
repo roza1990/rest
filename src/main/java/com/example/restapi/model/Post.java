@@ -23,13 +23,13 @@ public class Post {
   private String title;
   @Column
   private String description;
-
   @ManyToOne
   private User user;
 
+  @ManyToOne
+  private Comment comment;
   @Column
   private Date postDate;
-
   @Column
   private int view;
 }
