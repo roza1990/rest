@@ -39,8 +39,9 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
       .authorizeRequests()
       //.antMatchers("/users").hasAnyAuthority("USER", "ADMIN")
       //.antMatchers("/user/update").permitAll()
-       .antMatchers("//api/token/signIn").permitAll()
+       .antMatchers("/api/token/signIn").permitAll()
       .antMatchers("/api/token/signUp").permitAll()
+      //.antMatchers("/main").hasAnyAuthority("ADMIN","USER")
       .anyRequest().permitAll();
 
     // Custom JWT based security filter

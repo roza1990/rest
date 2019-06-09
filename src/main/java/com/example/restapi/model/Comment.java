@@ -25,10 +25,12 @@ public class Comment {
     private String commentDesc;
     @Column
     private Date commentDate;
+    @Column
+    private String helpful;
 
     @ManyToOne
     private User user;
     @ManyToOne
-    private Post post;
+    private Topic topic;
 
 }

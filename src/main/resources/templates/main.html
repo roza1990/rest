@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+</head>
+<body>
+<div class="container">
+<a role="button" class="btn btn-primary" href="/logout" style="text-decoration: none;
+    display: block;
+    width: 7%;">
+    Logout
+</a>
+
+<div id="users">
+
+</div>
+
+<div id="topics">
+
+
+</div>
+</div>
+</body>
+</html>
+
+<script>
+    $(document).ready(function () {
+
+
+        var user = JSON.parse(localStorage.getItem('userData'));
+        getUserDetails(user);
+        getAllTopics(user);
+
+
+        setTimeout(function () {
+            localStorage.removeItem('userData');
+            window.location.replace("/login");
+        }, 300000);
+    });
+
+    function getUserDetails(user) {
+        $.ajax({
+            url: "/getUserDetails/" + user.user.id,
+            method: "GET",
+            header: {Authorization: user.token}
+        }).done(function (data) {
+            $('#users').text("");
+            $('#users').append(" Welcome " +"<span style='color:blue;font-size: 28px'>"+ user.user.name + "</span> " + user.user.surname + "<br>");
+
+
+        })
+    }
+
+    function getAllTopics(user) {
+        console.log(user)
+        $.ajax({
+            url: "/api/forumTopic/getTopicByUserId/" + user.user.id,
+            method: "GET",
+
+        }).done(function (data) {
+            localStorage.setItem("postData", JSON.stringify(data));
+            $.each(data, function (i, item) {
+                var desc=item.description;
+                var res = desc.substring(0, 20);
+                $('#topics').append("<a style='cursor: pointer;color:blue' onclick='saved()' role='button' class='topicPage'   data-id="+item.id+">" + item.title + "</a> "+ "<br>" + res+ "...<br>" );
+            })
+
+
+        })
+    }
+
+
+    function saved() {
+        var clickedId;
+        $(".topicPage").click(function () {
+            clickedId = $(this).data('id')
+            localStorage.setItem('topicId', clickedId);
+
+        });
+
+        window.location.replace("/topicPage.html");
+    }
+
+</script>

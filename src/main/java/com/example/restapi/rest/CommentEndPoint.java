@@ -12,9 +12,9 @@ public class CommentEndPoint {
     @Autowired
     private CommentRepository commentRepository;
 
-    @GetMapping("/api/forumComment/getTopicComments/{postId}")
-    public ResponseEntity getAllComments(@PathVariable("postId") int postId) {
-        return ResponseEntity.ok(commentRepository.findCommentByPostId(postId));
+    @GetMapping("/api/forumComment/getTopicComments/{topicId}")
+    public ResponseEntity getAllComments(@PathVariable("topicId") int postId) {
+        return ResponseEntity.ok(commentRepository.findCommentByTopicId(postId));
     }
 
     @PostMapping("api/forumComment/addComment")

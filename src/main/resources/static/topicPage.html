@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+</head>
+<body>
+<div class="container">
+    <h2>Topic Page</h2>
+    <h3 id="username"> </h3>
+    <div id="topic">
+
+    </div>
+</div>
+
+
+
+</body>
+</html>
+
+<script>
+    $(document).ready(function () {
+        var topicId = localStorage.getItem('topicId');
+        getTopic(topicId);
+
+    });
+
+    function getTopic(topicId) {
+       $.ajax({
+            url: "/api/forumTopic/getTopicById/" + topicId,
+            method: "GET",
+
+        }).done(function (data) {
+            console.log(data)
+            $('#topic').text("");
+            $('#topic').append(data.title + " <br>" + data.description);
+           $('#username').append(data.user.name + " " + data.user.surname);
+
+
+        })
+    }
+</script>

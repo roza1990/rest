@@ -13,21 +13,21 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "rest_post")
-public class Post {
+@Table(name = "rest_topic")
+public class Topic {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
   @Column
   private String title;
-  @Column
+  @Column(columnDefinition="text")
   private String description;
   @ManyToOne
   private User user;
 
-  @ManyToOne
-  private Comment comment;
+//  @ManyToOne
+//  private Comment comment;
   @Column
   private Date postDate;
   @Column

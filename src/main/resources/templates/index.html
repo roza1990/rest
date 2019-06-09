@@ -7,51 +7,11 @@
 </head>
 <body>
 
-<a role="button" class="btn btn-primary btn-block" href="/logout" style="text-decoration: none;">Logout
+<a role="button" class="btn btn-primary btn-block" href="/login" style="text-decoration: none;">
+    Login
 </a>
-
 <div id="users" style="width: 50%; float: left">
 
 </div>
 </body>
 </html>
-
-<script>
-    // $(document).ready(function () {
-    //  $('.approved').click(function () {
-    //        //var id =$(this).attr("value");
-    //
-    //         $.ajax({
-    //             origin: "*",
-    //             url: "/getUserDetails/"+24,
-    //             type: "GET",
-    //             success: function(data) {
-    //                  console.log(data)
-    //                  }
-    //         });
-    //     })
-    //
-    // })
-
-
-    $(document).ready(function () {
-        console.log("hhhh")
-        getUserDetails();
-
-    });
-
-    function getUserDetails() {
-        $.ajax({
-            url: "/getUserDetails/"+id,
-            method: "GET"
-        }).done(function (data) {
-
-            $('#users').text("");
-
-                console.log(data.name)
-                $('#users').append(data.name + " " + data.surname + "<br>");
-
-        })
-    }
-
-</script>

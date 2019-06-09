@@ -46,8 +46,6 @@
 </html>
 
 <script>
-
-
     function login() {
         var email = $('#email').val();
         var password = $('#password').val();
@@ -71,10 +69,13 @@
 
         }).done(function (data) {
             console.log(data)
-            $(location).attr('href', '/');
+            // $(location).attr('href', '/');
+            localStorage.setItem("userData", JSON.stringify(data));
+            window.location.replace("/main");
 
         }).fail(function (error) {
-            console.log("iyaa")
+            $("#message").text("Please check the fields ! ");
+            $("#message").css("color", "red");
         })
     }
 
