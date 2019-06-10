@@ -89,21 +89,21 @@ public class UserEndpoint {
     return ResponseEntity.notFound().build();
   }
 
-//  @GetMapping("/getAll")
-//  public ResponseEntity getAll() {
-//    return ResponseEntity.ok(userRepository.findAll());
-//  }
+  @GetMapping("/getAll")
+  public ResponseEntity getAll() {
+    return ResponseEntity.ok(userRepository.findAll());
+  }
 
-//  @DeleteMapping("/user/{id}")
-//  public ResponseEntity deleteById(@PathVariable("id") int id, @AuthenticationPrincipal CurrentUser currentUser) {
-//    Optional<User> byId = userRepository.findById(id);
-//    if (byId.isPresent()) {
-//      userRepository.deleteById(id);
-//      return ResponseEntity
-//        .ok()
-//        .build();
-//    }
-//    return ResponseEntity.notFound().build();
-//  }
+  @DeleteMapping("/user/{id}")
+  public ResponseEntity deleteById(@PathVariable("id") int id, @AuthenticationPrincipal CurrentUser currentUser) {
+    Optional<User> byId = userRepository.findById(id);
+    if (byId.isPresent()) {
+      userRepository.deleteById(id);
+      return ResponseEntity
+        .ok()
+        .build();
+    }
+    return ResponseEntity.notFound().build();
+  }
 
 }
