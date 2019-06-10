@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,21 +17,20 @@ import java.util.Date;
 @Table(name = "rest_topic")
 public class Topic {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
-  @Column
-  private String title;
-  @Column(columnDefinition="text")
-  private String description;
-  @ManyToOne
-  private User user;
-
-//  @ManyToOne
-//  private Comment comment;
-  @Column
-  private Date postDate;
-  @Column
-  private int view;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column
+    private String title;
+    @Column(columnDefinition = "text")
+    private String description;
+    @ManyToOne
+    private User user;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @Column
+    private Date postDate;
+    @Column
+    private int view;
 }
 

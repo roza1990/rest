@@ -6,6 +6,7 @@ import com.example.restapi.security.JwtAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -30,20 +31,22 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    http.csrf().disable()
+        http.csrf().disable()
       // don't create session
-      .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-      .and()
-      .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
-      .and()
-      .authorizeRequests()
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .and()
+        .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+        .and()
+        .authorizeRequests()
       //.antMatchers("/users").hasAnyAuthority("USER", "ADMIN")
       //.antMatchers("/user/update").permitAll()
-       .antMatchers("/api/token/signIn").permitAll()
-      .antMatchers("/api/token/signUp").permitAll()
-      //.antMatchers("/main").hasAnyAuthority("ADMIN","USER")
-      .anyRequest().permitAll();
-
+        .antMatchers("/api/token/signIn").permitAll()
+        .antMatchers("/api/token/signUp").permitAll()
+        .antMatchers("/getUserDetails/*").hasAnyAuthority("ADMIN","USER")
+        .anyRequest().permitAll()
+        .antMatchers("/**").fullyAuthenticated().and().formLogin().loginPage("/login")
+        .failureUrl("/login?error").usernameParameter("email").permitAll().and().logout().logoutUrl("/logout")
+        .logoutSuccessUrl("/").permitAll();
     // Custom JWT based security filter
     http
       .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
@@ -51,6 +54,7 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
     // disable page caching
     http.headers().cacheControl();
   }
+
 
 
   @Autowired

@@ -89,6 +89,7 @@
             "password": password,
             "userType":userType
         };
+        console.log(data)
         //var form = $("#formId").serialize();
         $.ajax({
             url:"/api/token/signUp",
@@ -97,7 +98,7 @@
             dataType: 'json',
             data: JSON.stringify(data)
         }).done(function (data) {
-            console.log(data)
+            //console.log(data)
             $("#message").text("User was successfully added");
             $("#message").css("color", "green");
             $("#name").val("");

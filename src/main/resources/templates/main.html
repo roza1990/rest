@@ -9,20 +9,20 @@
 </head>
 <body>
 <div class="container">
-<a role="button" class="btn btn-primary" href="/logout" style="text-decoration: none;
+    <a role="button" class="btn btn-primary" href="/logout" style="text-decoration: none;
     display: block;
     width: 7%;">
-    Logout
-</a>
+        Logout
+    </a>
 
-<div id="users">
+    <div id="users">
 
-</div>
+    </div>
 
-<div id="topics">
+    <div id="topics">
 
 
-</div>
+    </div>
 </div>
 </body>
 </html>
@@ -36,10 +36,10 @@
         getAllTopics(user);
 
 
-        setTimeout(function () {
-            localStorage.removeItem('userData');
-            window.location.replace("/login");
-        }, 300000);
+        // setTimeout(function () {
+        //     localStorage.removeItem('userData');
+        //     window.location.replace("/login");
+        // }, 300000);
     });
 
     function getUserDetails(user) {

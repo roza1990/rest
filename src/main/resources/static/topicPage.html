@@ -12,8 +12,11 @@
     <h2>Topic Page</h2>
     <h3 id="username"> </h3>
     <div id="topic">
+   </div>
+    <div id="topicComment">
 
     </div>
+
 </div>
 
 
@@ -25,6 +28,7 @@
     $(document).ready(function () {
         var topicId = localStorage.getItem('topicId');
         getTopic(topicId);
+        getTopicComment(topicId);
 
     });
 
@@ -34,11 +38,27 @@
             method: "GET",
 
         }).done(function (data) {
-            console.log(data)
+           // var count = localStorage['count'];
+           //  console.log(count)
             $('#topic').text("");
-            $('#topic').append(data.title + " <br>" + data.description);
+            $('#topic').append(data.postDate + " <br>" +data.title + " <br>" + data.description);
            $('#username').append(data.user.name + " " + data.user.surname);
 
+
+        })
+    }
+
+    function getTopicComment(topicId) {
+        $.ajax({
+            url: "/api/forumComment/getTopicComments/" + topicId,
+            method: "GET",
+
+        }).done(function (data) {
+           console.log(data.length)
+            $.each(data, function (i, item) {
+            $('#topicComment').append("<span style='font-size: 29px;'>"+item.commentTitle+"</span>" +" <br>" + item.commentDesc+"</br>");
+
+            })
 
         })
     }

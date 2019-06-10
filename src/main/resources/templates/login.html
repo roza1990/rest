@@ -59,7 +59,7 @@
             "password": password
 
         };
-        console.log(data)
+        //console.log(data.token)
         $.ajax({
             url: "/api/token/signIn",
             method: "post",
@@ -68,7 +68,7 @@
             data: JSON.stringify(data),
 
         }).done(function (data) {
-            console.log(data)
+            //console.log(data.token + " token")
             // $(location).attr('href', '/');
             localStorage.setItem("userData", JSON.stringify(data));
             window.location.replace("/main");
